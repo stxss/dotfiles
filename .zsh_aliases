@@ -1,0 +1,59 @@
+alias pss="ps -ef | grep"
+alias rgf="rg --files | rg "
+alias cal="ncal -b"
+alias duh="sudo du -h --max-depth=1 | sort -h"
+alias ports="sudo netstat -tunlp"
+
+#docker
+alias dcd="docker compose down --remove-orphans"
+alias dcb="docker compose down --remove-orphans && docker-compose build"
+alias dcu="docker compose up"
+alias dcl="docker compose logs -f"
+
+alias dockd="docker image ls -f dangling=true"
+alias dockdf="docker system df"
+#alias dockrmd="docker image rm $(docker image ls -f 'dangling=true' -q)"
+alias dps="docker ps --format \"table {{.ID}}\t{{.Image}}\t{{.Names}}\t{{.Networks}}\t{{.State}}\t{{.CreatedAt}}\""
+
+function dcf {
+        local command=$1
+        local file=$2
+        local usefile=""
+        local cmd=""
+
+        if [ -n "$file" ]; then
+                usefile="-f $file"
+        fi
+
+        if [ "$command" = "down" ]; then                                                                                                                                                                                       cmd="docker compose $usefile down --remove-orphans"
+        elif [ "$command" = "build" ]; then 
+            cmd="docker compose $usefile down --remove-orphans && docker-compose $usefile build"
+	elif [ "$command" = "up" ]; then
+	    cmd="docker compose $usefile up"
+	fi                                                                                                                                                                                                                                                                                                                                              
+        echo "executing $cmd"
+	eval $cmd                   
+}                                                                                                                                                                                                                                                                                                                                                       
+                                                                                                                                                                                                                                                                                                                                                        
+#k8s
+alias k8s_contexts="kubectl config view -o jsonpath='{.contexts[*].name}' | tr \" \" \"\n\""
+alias k8s_current_context="kubectl config current-context"
+alias k8s_set_context="kubectl config use-context"    
+                                                                                                                                                                                                                                                                                                                                                        
+#dotnet                                                                                                                                                                                                            
+alias dnb="dotnet build"                                                                                                                                                                                           
+alias dnr="dotnet run"                                                                                                                                                                                             
+alias dnrd="dotnet run --environment Development"                                                                                                                                                                  
+alias dnrp="dotnet run --environment Production"                                                                                                                                                                   
+alias dnc="dotnet clean"
+
+
+#git
+alias ga="git add " 
+alias gap="git add --patch "
+alias gc="git commit "
+alias gcm="git commit -m "
+alias game="git commit --amend --no-edit"
+alias gst="git status"
+alias gb="git branch "
+
